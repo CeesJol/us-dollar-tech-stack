@@ -1,0 +1,31 @@
+CreateRole({
+  // To update, Replace the first line with 
+	// Update(Role("User"), {
+  name: "User",
+  membership: [
+    {
+      // This role will be assigned to all users
+      resource: Collection("User")
+    }
+  ],
+  privileges: [
+    {
+      resource: Collection("User"),
+      actions: {
+        // CRUD rights on all your own data but not other people's data
+        create: Query(Lambda("ref", Equals(Identity(), Var("ref")))),
+        read: Query(Lambda("ref", Equals(Identity(), Var("ref")))),
+        write: Query(Lambda(["oldData", "newData", "ref"], Equals(Identity(), Var("ref")))),
+        delete: Query(Lambda("ref", Equals(Identity(), Var("ref"))))
+      }
+    },
+    {
+      resource: Function("logoutUser"),
+      actions: { call: true }
+    },
+    {
+      resource: Function("updateUserPassword"),
+      actions: { call: true }
+    }
+  ]
+})

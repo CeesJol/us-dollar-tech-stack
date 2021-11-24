@@ -1,0 +1,30 @@
+type User {
+  username: String
+  email: String @unique
+  confirmed: Boolean
+}
+
+type Test {
+  name: String
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Query {
+  users: [User]
+  usersByConfirmStatus(confirmed: Boolean!): [User]
+  userByEmail(email: String!): User
+}
+
+type Mutation {
+  loginUser(email: String!, password: String!): AuthPayload!
+    @resolver(name: "loginUser")
+  logoutUser: Boolean! @resolver(name: "logoutUser")
+  createUser(email: String!, username: String!, password: String!): User!
+    @resolver(name: "createUser")
+  updateUserPassword(id: ID!, password: String!): User!
+    @resolver(name: "updateUserPassword")
+}
