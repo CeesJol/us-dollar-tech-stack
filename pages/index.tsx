@@ -19,7 +19,7 @@ export default function Home() {
         const comments = Array.from(page.items, (item) => item.data);
         setComments(comments);
         channel.subscribe((msg) => {
-          setComments([...comments, msg.data]);
+          setComments((oldArray) => [msg.data, ...oldArray]);
         });
       });
     });
@@ -45,13 +45,15 @@ export default function Home() {
     );
   };
   const addComment = () => {
-    const comment = "Whats up?";
+    const comment = "My fav number is: " + Math.random();
     const timestamp = Date.now();
     const commentObject = { comment, timestamp };
     const channel = Ably.channels.get("comments");
     channel.publish("add_comment", commentObject, (err) => {
       if (err) {
         toastError(err.message);
+      } else {
+        toast.success("Added comment to top of the list!");
       }
     });
   };
@@ -67,17 +69,17 @@ export default function Home() {
       <h3>Database (FaunaDB)</h3>
       <Button fn={addTestData} text="Add test data" altText="Adding..." />
       <ul>
-        {testData.map((item) => (
-          <li key={item._id}>{item.name}</li>
-        ))}
+        {testData &&
+          testData.map((item) => <li key={item._id}>{item.name}</li>)}
       </ul>
 
       <h3>Realtime comments (Ably)</h3>
       <Button fn={addComment} text="Add comment" altText="Adding..." />
       <ul>
-        {comments.map((comment) => (
-          <li key={comment.timestamp}>{comment.comment}</li>
-        ))}
+        {comments &&
+          comments.map((comment) => (
+            <li key={comment.timestamp}>{comment.comment}</li>
+          ))}
       </ul>
     </div>
   );
