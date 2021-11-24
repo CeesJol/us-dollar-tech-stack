@@ -39,7 +39,7 @@ export const handleErrors = (errors) => {
 /**
  * Function to send HTTP request to API.
  */
-export const fetchFromAPI = async (body, route) => {
+export const fetchFromAPI = async (body: any, route: string) => {
   return new Promise(async (resolve, reject) => {
     try {
       const data = await fetch(`/api/${route}`, {
@@ -64,7 +64,7 @@ export const fetchFromAPI = async (body, route) => {
 /**
  * Function to send queries to the database.
  */
-export const executeQuery = async (query, userSecret) => {
+export const executeQuery = async (query: string, userSecret: string) => {
   console.info("===== QUERY =====\n", query, "\n===== RESULT ====");
   try {
     // Local (docker) fetch url: "http://localhost:8084/graphql"
@@ -110,7 +110,7 @@ export const executeQuery = async (query, userSecret) => {
  * something went wrong, like the object no longer exists
  * Source: https://stackoverflow.com/questions/27709636/determining-if-all-attributes-on-a-javascript-object-are-null-or-an-empty-string
  */
-export const isEmptyReturnObject = (obj) => {
+export const isEmptyReturnObject = (obj: Object) => {
   for (var key in obj) {
     if (obj[key] !== null) {
       return false;
@@ -132,9 +132,9 @@ export const isEmptyReturnObject = (obj) => {
  *		}
  *	}
  */
-export const stringifyObject = (data) => {
+export const stringifyObject = (data: any) => {
   // Convert object to array of (key, value) pairs
-  let entries = Object.entries(data);
+  let entries: [string, string][] = Object.entries(data);
 
   let keys = ""; // keys
   let pairs = ""; // (key, value) pairs

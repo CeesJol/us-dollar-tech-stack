@@ -8,7 +8,7 @@ import {
 } from "../../lib/validate";
 
 // User data request data used by getUserByEmail and readUser
-const USER_DATA = `_id
+const USER_DATA: string = `_id
 username
 email
 confirmed
@@ -18,7 +18,13 @@ confirmed
  *  | USER
  *  |----------------------------
  */
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   console.info("loginUser request");
   email = email.toLowerCase();
   const validationError = validateLogin(email, password);
@@ -36,7 +42,7 @@ export const loginUser = ({ email, password }) => {
   );
 };
 
-export const logoutUser = (secret) => {
+export const logoutUser = (secret: string) => {
   console.info("logoutUser request");
   return executeQuery(
     `mutation LogoutUser {
@@ -46,7 +52,15 @@ export const logoutUser = (secret) => {
   );
 };
 
-export const createUser = ({ email, username, password }) => {
+export const createUser = ({
+  email,
+  username,
+  password,
+}: {
+  email: string;
+  username: string;
+  password: string;
+}) => {
   console.info("createUser request");
   email = email.toLowerCase();
   const validationError = validateSignup(email, username, password);
@@ -64,7 +78,10 @@ export const createUser = ({ email, username, password }) => {
   );
 };
 
-export const updateUserPassword = ({ id, password }, secret) => {
+export const updateUserPassword = (
+  { id, password }: { id: string; password: string },
+  secret: string
+) => {
   console.info("updateUserPassword request");
   const validationError = validatePassword(password);
   if (validationError) return [{ validationError }];
@@ -81,7 +98,13 @@ export const updateUserPassword = ({ id, password }, secret) => {
   );
 };
 
-export const updateUserPasswordNoSecret = ({ token, password }) => {
+export const updateUserPasswordNoSecret = ({
+  token,
+  password,
+}: {
+  token: string;
+  password: string;
+}) => {
   console.info("updateUserPasswordNoSecret request");
   try {
     const validationError = validatePassword(password);
@@ -104,7 +127,10 @@ export const updateUserPasswordNoSecret = ({ token, password }) => {
   }
 };
 
-export const updateUser = async ({ id, data }, secret) => {
+export const updateUser = async (
+  { id, data }: { id: string; data: any },
+  secret: string
+) => {
   console.info("updateUser request", id, data);
   if (data.email) data.email.toLowerCase();
   const { pairs, keys } = stringifyObject(data);
@@ -120,7 +146,7 @@ export const updateUser = async ({ id, data }, secret) => {
   );
 };
 
-export const readUser = async ({ id }, secret) => {
+export const readUser = async ({ id }: { id: string }, secret: string) => {
   console.info("readUser request");
   return executeQuery(
     `query FindAUserByID {
@@ -132,7 +158,10 @@ export const readUser = async ({ id }, secret) => {
   );
 };
 
-export const getUserByEmail = async ({ email }, secret) => {
+export const getUserByEmail = async (
+  { email }: { email: string },
+  secret: string
+) => {
   console.info("getUserByEmail request");
   email = email.toLowerCase();
   return executeQuery(
@@ -145,7 +174,10 @@ export const getUserByEmail = async ({ email }, secret) => {
   );
 };
 
-export const confirmUser = async ({ token }, secret) => {
+export const confirmUser = async (
+  { token }: { token: string },
+  secret: string
+) => {
   console.info("confirmUser request");
   try {
     const decoded = jwt.verify(token, process.env.EMAIL_SECRET);
@@ -165,7 +197,7 @@ export const confirmUser = async ({ token }, secret) => {
   }
 };
 
-export const checkUserEmail = async ({ email }) => {
+export const checkUserEmail = async ({ email }: { email: string }) => {
   console.info("checkUserEmail request");
   return executeQuery(
     `query {
@@ -200,7 +232,7 @@ export const faultyQuery = async () => {
   );
 };
 
-export const testMutation = ({ name }) => {
+export const testMutation = ({ name }: { name: string }) => {
   console.info("testMutation request");
   return executeQuery(
     `mutation CreateTest {
@@ -230,7 +262,7 @@ export const testQuery = () => {
 
 // Source
 // https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name, cookies) {
+function getCookie(name: string, cookies: string) {
   const value = `; ${cookies}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
