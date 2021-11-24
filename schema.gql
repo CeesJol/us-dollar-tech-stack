@@ -15,6 +15,7 @@ type AuthPayload {
 
 type Query {
   users: [User]
+  testData: [Test]
   usersByConfirmStatus(confirmed: Boolean!): [User]
   userByEmail(email: String!): User
 }

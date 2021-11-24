@@ -213,6 +213,21 @@ export const testMutation = ({ name }) => {
   );
 };
 
+export const testQuery = () => {
+  console.info("testQuery request");
+  return executeQuery(
+    `query TestData {
+      testData {
+        data {
+          _id
+          name
+        }
+      }
+    }`,
+    process.env.FAUNADB_SECRET_KEY
+  );
+};
+
 // Source
 // https://stackoverflow.com/questions/10730362/get-cookie-by-name
 function getCookie(name, cookies) {
@@ -306,6 +321,9 @@ const fauna = async (req, res) => {
         break;
       case "TEST_MUTATION":
         result = await testMutation(body);
+        break;
+      case "TEST_QUERY":
+        result = await testQuery();
         break;
       default:
         result = [{ message: "Error: No such type in /api/fauna: " + type }];

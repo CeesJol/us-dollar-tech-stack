@@ -1,5 +1,5 @@
 {
-  "name": "transport",
+  "name": "us-dollar-tech-stack",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ably": "^1.2.15",
     "jsonwebtoken": "^8.5.1",
     "next": "12.0.4",
     "react": "17.0.2",
