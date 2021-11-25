@@ -7,10 +7,10 @@ const getErrorMessage = (e) => {
     e[0].msg ||
     e[0].message ||
     e[0].description ||
-    "An unkown error occurred."
+    "An error occurred."
   );
 };
 export const toastError = (err) => {
-  toast.error(`⚠️ ${getErrorMessage(err)}`);
+  toast.error(getErrorMessage(err));
   console.error(err);
 };
