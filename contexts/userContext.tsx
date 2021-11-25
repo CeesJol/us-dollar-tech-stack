@@ -1,12 +1,20 @@
-import React, { createContext, useState, useEffect } from "react";
-import Router from "next/router";
+import React, { createContext, useState, useEffect, FC } from "react";
 import { fauna } from "../lib/api/api";
 import { toastError } from "../lib/error";
 
-export const UserContext = createContext();
+type ContextType = {
+  user: any | null;
+  storeUser: (data: any) => void;
+  clearUser: () => void;
+  userExists: () => boolean;
+  handleLogin: (email: string, password: string) => void;
+  handleSignup: (email: string, username: string, password: string) => void;
+  handleLogout: () => void;
+};
 
-const UserContextProvider = (props) => {
-  // User
+export const UserContext = createContext<ContextType | null>(null);
+
+const UserProvider: FC = ({ children }) => {
   const [user, setUser] = useState(null);
   const storeUser = (data) => {
     setUser((prevUser) => ({ ...prevUser, ...data }));
@@ -33,7 +41,7 @@ const UserContextProvider = (props) => {
   };
   const handleLogin = async (email, password) => {
     await fauna({ type: "LOGIN_USER", email, password }).then(
-      async (data) => {
+      async (data: any) => {
         storeUser(data);
         localStorage.setItem("userId", JSON.stringify(data._id));
         // When logged in, push the user to a new page
@@ -45,10 +53,10 @@ const UserContextProvider = (props) => {
       }
     );
   };
-  const handleSignUp = async (email, username, password) => {
+  const handleSignup = async (email, username, password) => {
     await fauna({ type: "CREATE_USER", email, username, password }).then(
-      async (data) => {
-        const id = data.createUser._id;
+      async (data: any) => {
+        // const id = data.createUser._id;
         // send({ type: "SEND_CONFIRMATION_EMAIL", id, email });
         await handleLogin(email, password);
       },
@@ -58,7 +66,7 @@ const UserContextProvider = (props) => {
       }
     );
   };
-  const handleLogOut = async () => {
+  const handleLogout = async () => {
     clearUser();
     await fauna({ type: "LOGOUT_USER" });
   };
@@ -75,7 +83,7 @@ const UserContextProvider = (props) => {
       return;
     }
     fauna({ type: "READ_USER", id: userId }).then(
-      (data) => {
+      (data: any) => {
         // Check result
         if (!data.findUserByID) {
           console.error("Unauthenticated. Data:", data);
@@ -98,18 +106,18 @@ const UserContextProvider = (props) => {
   return (
     <UserContext.Provider
       value={{
-        storeUser,
         user,
+        storeUser,
         clearUser,
         userExists,
         handleLogin,
-        handleSignUp,
-        handleLogOut,
+        handleSignup,
+        handleLogout,
       }}
     >
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 };
 
-export default UserContextProvider;
+export default UserProvider;

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, ContextType } from "react";
 import Head from "next/head";
 import Button from "@/components/Button";
 import useHome from "./useHome";
@@ -6,7 +6,7 @@ import { UserContext } from "@/contexts/userContext";
 
 const Home = () => {
   const { addTestData, addComment, testData, comments, init } = useHome();
-  const { userExists, user, handleLogin, handleSignUp, handleLogOut } =
+  const { userExists, user, handleLogin, handleSignup, handleLogout } =
     useContext(UserContext);
   const [loginNotRegister, setLoginNotRegister] = useState(true);
   const [username, setUsername] = useState("");
@@ -40,7 +40,7 @@ const Home = () => {
       {userExists() ? (
         <>
           <p>You are logged in as {user?.username}.</p>
-          <Button fn={handleLogOut} text="Log out" />
+          <Button fn={handleLogout} text="Log out" />
         </>
       ) : (
         <>
@@ -105,7 +105,7 @@ const Home = () => {
               />
 
               <Button
-                fn={() => handleSignUp(email, username, password)}
+                fn={() => handleSignup(email, username, password)}
                 text="Sign up"
                 altText="Signing up..."
               />
