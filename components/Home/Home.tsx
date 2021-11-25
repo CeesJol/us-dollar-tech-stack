@@ -27,7 +27,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="home__container">
       <Head>
         <title>{process.env.APP_NAME}</title>
         <meta name="description" content="Game" />
@@ -36,99 +36,109 @@ const Home = () => {
 
       <h1>{process.env.APP_NAME}</h1>
 
-      <h3>Authentication</h3>
-      {userExists() ? (
-        <>
-          <p>You are logged in as {user?.username}.</p>
-          <Button fn={handleLogout} text="Log out" />
-        </>
-      ) : (
-        <>
-          <p>You are not logged in.</p>
-          <Button
-            fn={() => setLoginNotRegister(!loginNotRegister)}
-            text={`Let me ${loginNotRegister ? "register" : "log in"} instead`}
-          />
-          {loginNotRegister ? (
-            <form>
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={email}
-                onChange={handleChangeEmail}
-              />
+      <div className="home__box">
+        <h3>Authentication</h3>
+        {userExists() ? (
+          <>
+            <p>You are logged in as {user?.username}.</p>
+            <Button fn={handleLogout} text="Log out" />
+          </>
+        ) : (
+          <div>
+            <p>You are not logged in.</p>
+            <Button
+              fn={() => setLoginNotRegister(!loginNotRegister)}
+              text={`Let me ${
+                loginNotRegister ? "register" : "log in"
+              } instead`}
+            />
+            <div>
+              {loginNotRegister ? (
+                <form>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={email}
+                    onChange={handleChangeEmail}
+                  />
 
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={handleChangePassword}
-              />
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={handleChangePassword}
+                  />
 
-              <Button
-                fn={() => handleLogin(email, password)}
-                text="Log in"
-                altText="Logging in..."
-              />
-            </form>
-          ) : (
-            <form>
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={email}
-                onChange={handleChangeEmail}
-              />
+                  <Button
+                    fn={() => handleLogin(email, password)}
+                    text="Log in"
+                    altText="Logging in..."
+                  />
+                </form>
+              ) : (
+                <form>
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={email}
+                    onChange={handleChangeEmail}
+                  />
 
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={handleChangeUsername}
-              />
+                  <label htmlFor="username">Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={username}
+                    onChange={handleChangeUsername}
+                  />
 
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={handleChangePassword}
-              />
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={handleChangePassword}
+                  />
 
-              <Button
-                fn={() => handleSignup(email, username, password)}
-                text="Sign up"
-                altText="Signing up..."
-              />
-            </form>
-          )}
-        </>
-      )}
+                  <Button
+                    fn={() => handleSignup(email, username, password)}
+                    text="Sign up"
+                    altText="Signing up..."
+                  />
+                </form>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
 
-      <h3>Database (FaunaDB)</h3>
-      <Button fn={addTestData} text="Add test data" altText="Adding..." />
-      <ul>
-        {testData &&
-          testData.map((item) => <li key={item._id}>{item.name}</li>)}
-      </ul>
+      <div className="home__box">
+        <h3>Database (FaunaDB)</h3>
+        <Button fn={addTestData} text="Add test data" altText="Adding..." />
+        <ul>
+          {testData &&
+            testData.map((item) => <li key={item._id}>{item.name}</li>)}
+        </ul>
+      </div>
 
-      <h3>Realtime comments (Ably)</h3>
-      <Button fn={addComment} text="Add comment" altText="Adding..." />
-      <ul>
-        {comments &&
-          comments.map((comment) => (
-            <li key={comment.timestamp}>{comment.comment}</li>
-          ))}
-      </ul>
+      <div className="home__box">
+        <h3>Realtime comments (Ably)</h3>
+        <Button fn={addComment} text="Add comment" altText="Adding..." />
+        <ul>
+          {comments &&
+            comments.map((comment) => (
+              <li key={comment.timestamp}>{comment.comment}</li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 };

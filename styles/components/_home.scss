@@ -1,0 +1,15 @@
+.home {
+  &__container {
+    position: relative;
+    margin: 1rem;
+  }
+
+  &__box {
+    margin: 1rem;
+    padding: 1rem;
+    width: 40rem;
+    margin-bottom: 3rem;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+  }
+}
