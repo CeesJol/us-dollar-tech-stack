@@ -1,7 +1,7 @@
 /**
  * Handle errors
  */
-export const handleErrors = (errors) => {
+export const handleErrors = (errors: any) => {
   const result = [];
 
   for (var error of errors) {

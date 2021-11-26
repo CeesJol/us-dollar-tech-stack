@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState, ContextType } from "react";
-import Head from "next/head";
 import Button from "@/components/Button";
 import useHome from "./useHome";
 import { UserContext } from "@/contexts/userContext";
@@ -28,13 +27,10 @@ const Home = () => {
 
   return (
     <div className="home__container">
-      <Head>
-        <title>{process.env.APP_NAME}</title>
-        <meta name="description" content="Game" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-      </Head>
-
-      <h1>{process.env.APP_NAME}</h1>
+      <div className="home__box">
+        <h1>{process.env.APP_NAME}</h1>
+        <p>{process.env.APP_DESCRIPTION}</p>
+      </div>
 
       <div className="home__box">
         <h3>Authentication</h3>

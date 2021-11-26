@@ -1,17 +1,26 @@
 import { ToastContainer } from "react-toastify";
-import type { AppProps /*, AppContext */ } from "next/app";
+import type { AppProps } from "next/app";
+import Head from "next/Head";
 
 import "../styles/index.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 import UserContextProvider from "../contexts/userContext";
+import React from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <UserContextProvider>
-      <ToastContainer />
-      <Component {...pageProps} />
-    </UserContextProvider>
+    <div>
+      <Head>
+        <title>{process.env.APP_NAME}</title>
+        <meta name="description" content="Game" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
+      </Head>
+      <UserContextProvider>
+        <ToastContainer />
+        <Component {...pageProps} />
+      </UserContextProvider>
+    </div>
   );
 }
 

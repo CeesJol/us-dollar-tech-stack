@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, FC } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { fauna } from "../lib/api/api";
 import { toastError } from "../lib/error";
 
@@ -14,7 +14,7 @@ type ContextType = {
 
 export const UserContext = createContext<ContextType | null>(null);
 
-const UserProvider: FC = ({ children }) => {
+const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const storeUser = (data) => {
     setUser((prevUser) => ({ ...prevUser, ...data }));
@@ -39,7 +39,7 @@ const UserProvider: FC = ({ children }) => {
   const userExists = () => {
     return !!user && user.username;
   };
-  const handleLogin = async (email, password) => {
+  const handleLogin = async (email: string, password: string) => {
     await fauna({ type: "LOGIN_USER", email, password }).then(
       async (data: any) => {
         storeUser(data);
@@ -53,7 +53,11 @@ const UserProvider: FC = ({ children }) => {
       }
     );
   };
-  const handleSignup = async (email, username, password) => {
+  const handleSignup = async (
+    email: string,
+    username: string,
+    password: string
+  ) => {
     await fauna({ type: "CREATE_USER", email, username, password }).then(
       async (data: any) => {
         // const id = data.createUser._id;

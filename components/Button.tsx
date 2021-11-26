@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({ text, altText, fn, color }) => {
           {getText()}
         </button>
       ) : (
-        <Link href="/signup">
+        <Link href="/signup" passHref>
           <button className={className}>{text ? text : "Start now"}</button>
         </Link>
       )}
