@@ -1,6 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import type { AppProps } from "next/app";
-import Head from "next/Head";
+import Head from "next/head";
 
 import "../styles/index.scss";
 import "react-toastify/dist/ReactToastify.css";
