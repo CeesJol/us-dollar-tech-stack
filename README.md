@@ -19,7 +19,7 @@ This is a boilerplate for a quick web development project.
 
 - FaunaDB
   - Create an account
-  - Create a database, call it `apple-pie`
+  - Create a database, call it `apple-pie`, set Region to `Europe`\*
   - In the next steps, you will need your copy pasta skills
   - Go the the GraphQl tab, and import the `schema.gql`
   - Go to the Functions tab, and add each function from `fauna/functions`
@@ -41,6 +41,8 @@ This is a boilerplate for a quick web development project.
   - To start the server: run `yarn dev` (you need to restart this if you change the `.env` file!)
   - You might get some errors when you start for the first time, just refresh. Shrug emoji.
   - If you still get errors --> _good luck!_
+
+\* Other regions are also possible, but then you need to change the `FAUNADB_GRAPHQL_ENDPOINT` in `next.config.js`.
 
 ## Deploying
 
